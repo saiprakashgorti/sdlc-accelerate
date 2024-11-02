@@ -15,6 +15,7 @@ function App() {
   const [textFile, setTextFile] = useState(null);
   const [excelFile, setExcelFile] = useState(null);
   const [wordFile, setWordFile] = useState(null);
+  const [htmlCode, setHtmlCode] = useState("<h1>Hello World</h1>");
   const [plantUMLCode, setPlantUMLCode] = useState(`
     @startuml
     actor User
@@ -202,7 +203,10 @@ DEL ||--o{ ANAL
         {page === 1 && <DataTableScreen data={assistantResponse} excelFile={excelFile} setExcelFile={setExcelFile} fileType={fileType} setFileType={setFileType} nextPage={nextPage} prevPage={prevPage} />}
         {/* {page === 2 && <WordDocumentScreen wordFile={wordFile} setWordFile={setWordFile} nextPage={nextPage} prevPage={prevPage} />} */}
         {page === 2 && <PlantUMLScreen plantUMLCode={plantUMLCode} setPlantUMLCode={setPlantUMLCode} url={umlUrl} nextPage={nextPage} prevPage={prevPage} />}
-        {page === 3 && <FinalReport pdfFile={textFile} excelFile={excelFile} wordFile={wordFile} plantUMLCode={plantUMLCode} prevPage={prevPage} />}
+        {page === 3 && (
+          <HtmlRendererScreen htmlCode={htmlCode} setHtmlCode={setHtmlCode} nextPage={nextPage} prevPage={prevPage} />
+        )}
+        {page === 4 && <FinalReport pdfFile={textFile} excelFile={excelFile} wordFile={wordFile} plantUMLCode={plantUMLCode} prevPage={prevPage} />}
       </div>
     </div>
   );
@@ -391,6 +395,31 @@ function PlantUMLScreen({ plantUMLCode, setPlantUMLCode, url, nextPage, prevPage
     </div>
   );
 }
+
+function HtmlRendererScreen({ htmlCode, setHtmlCode, nextPage, prevPage }) {
+  
+  // Handle changes in the HTML input field
+  const handleHtmlChange = (e) => {
+    setHtmlCode(e.target.value);
+  };
+
+  return (
+    <div className="screen">
+      <h2>Render HTML Code</h2>
+
+      {/* Textarea to input HTML code */}
+      <textarea value={htmlCode} onChange={handleHtmlChange} rows={10}></textarea>
+
+      {/* Render the HTML code dynamically */}
+      <div className="html-preview" dangerouslySetInnerHTML={{ __html: htmlCode }}></div>
+
+      {/* Navigation buttons */}
+      <button onClick={prevPage}>Previous</button>
+      <button onClick={nextPage}>Next</button>
+    </div>
+  );
+}
+
 
 function FinalReport({ pdfFile, excelFile, wordFile, plantUMLCode, prevPage }) {
   return (

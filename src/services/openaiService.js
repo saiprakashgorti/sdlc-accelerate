@@ -6,6 +6,7 @@ import DATA_PROMPT from '../prompts/data_analyzer';
 
 const openAIApiKey = import.meta.env.VITE_OPENAI_API_KEY;
 
+
 if (!openAIApiKey) {
   throw new Error('OpenAI API key is not defined in the environment variables.');
 }
