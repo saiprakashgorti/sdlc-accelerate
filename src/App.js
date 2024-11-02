@@ -54,18 +54,16 @@ function PDFUploadScreen({ pdfFile, setPdfFile, nextPage }) {
     <div className="screen">
       <h2>Upload Project Requirements PDF</h2>
       <input type="file" accept="application/pdf" onChange={handleFileChange} />
-      {pdfFile && <button onClick={nextPage}>Next</button>}
+      {pdfFile && (
+        <div>
+          <button onClick={nextPage}>Next</button>
+        </div>
+      )}
     </div>
   );
 }
 
 function DataTableScreen({ excelFile, setExcelFile, nextPage, prevPage }) {
-  // Sample JSON data for the table
-  // const sampleData = [
-  //   { Task: "Define Project Scope", DueDate: "2024-11-10", Status: "Not Started" },
-  //   { Task: "Data Collection", DueDate: "2024-11-12", Status: "In Progress" },
-  //   { Task: "Model Training", DueDate: "2024-11-20", Status: "Pending" }
-  // ];
   const sampleData = [
     { "epics": [ { "Epic": "Listing Management", "Features": [ "Product Catalog Integration: Enable seamless integration of seller's product catalog for easier listing management.", "Multi-format Listing Support: Allow listings in multiple formats including auctions and fixed-price sales for increased selling flexibility.", "Category-based Organization: Implement category-based organization of listings for improved product discoverability." ] }, { "Epic": "Inventory Management", "Features": [ "Real-time Inventory Sync: Maintain real-time inventory levels across all sales channels to prevent overselling.", "Minimum Threshold Alerts: Enable automated alerts for low stock levels to ensure timely replenishment.", "Automated Restock Triggers: Implement automated triggers for restocking items based on inventory levels and sales velocity." ] }, { "Epic": "Pricing System", "Features": [ "Dynamic Pricing Algorithms: Implement dynamic pricing algorithms to optimize listing prices based on market conditions and demand.", "Auction Management: Enable management of auction-style listings with automated bidding and closing processes.", "Bulk Pricing Updates: Allow sellers to update prices in bulk for efficient listing management." ] }, { "Epic": "Buyer Experience", "Features": [ "Advanced Search Functionality: Implement advanced search capabilities to help buyers find desired products easily.", "Secure Checkout Process: Ensure a secure checkout process with multiple payment methods for improved conversion rates.", "Order Tracking: Provide buyers with real-time tracking of their orders to enhance post-purchase experience." ] }, { "Epic": "Security", "Features": [ "Multi-factor Authentication: Implement multi-factor authentication for user accounts to enhance security.", "Encrypted Communications: Ensure all communications are encrypted to protect sensitive user data.", "Fraud Detection: Implement automated fraud detection mechanisms to protect users and maintain platform integrity." ] }, { "Epic": "Integration", "Features": [ "Third-Party System Integration: Enable integration with key third-party systems such as payment gateways, shipping carriers, and inventory management.", "RESTful API Architecture: Implement a RESTful API architecture to facilitate seamless integration and data exchange with external systems." ] }, { "Epic": "Compliance", "Features": [ "GDPR Compliance: Ensure platform complies with GDPR for data privacy and protection.", "PCI DSS Standards: Adhere to PCI DSS standards for secure payment processing and cardholder data protection." ] }, { "Epic": "Performance", "Features": [ "High Availability: Maintain 99.99% platform uptime for consistent user experience.", "Fast Load Time: Ensure page load time is under 2 seconds for improved user experience and SEO." ] } ] }
   ];  
@@ -76,21 +74,18 @@ function DataTableScreen({ excelFile, setExcelFile, nextPage, prevPage }) {
   sampleData[0].epics.forEach((epic) => {
     epic.Features.forEach((feature, index) => {
       if (index === 0) {
-        // First feature of an epic gets the Epic name and rowspan
         flattenedDataForTable.push({
           Epic: epic.Epic,
           Feature: feature,
           RowSpan: epic.Features.length,
         });
       } else {
-        // Subsequent features don't repeat the Epic name
         flattenedDataForTable.push({
           Epic: "",
           Feature: feature,
           RowSpan: null,
         });
       }
-      // For Excel, leave empty strings for repeated Epics
       flattenedDataForExcel.push({
         Epic: index === 0 ? epic.Epic : "",
         Feature: feature,
@@ -98,16 +93,13 @@ function DataTableScreen({ excelFile, setExcelFile, nextPage, prevPage }) {
     });
   });
 
-  // Function to download the table data as an Excel file
   const downloadFile = (filename) => {
-    const worksheet = XLSX.utils.json_to_sheet(flattenedDataForExcel); // Convert flattened JSON to Excel sheet
+    const worksheet = XLSX.utils.json_to_sheet(flattenedDataForExcel);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
-    // Create a binary string representation of the workbook
     const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
 
-    // Save the file using FileSaver
     const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
     FileSaver.saveAs(blob, filename);
   };
@@ -116,7 +108,6 @@ function DataTableScreen({ excelFile, setExcelFile, nextPage, prevPage }) {
     <div className="screen">
       <h2>Project Data Table</h2>
 
-      {/* Render the table */}
       <table className="table table-bordered">
         <thead>
           <tr>
@@ -127,7 +118,6 @@ function DataTableScreen({ excelFile, setExcelFile, nextPage, prevPage }) {
         <tbody>
           {flattenedDataForTable.map((row, index) => (
             <tr key={index}>
-              {/* Only render Epic cell if it's not empty */}
               {row.Epic && (
                 <td rowSpan={row.RowSpan}>{row.Epic}</td>
               )}
@@ -137,32 +127,28 @@ function DataTableScreen({ excelFile, setExcelFile, nextPage, prevPage }) {
         </tbody>
       </table>
 
-      {/* Button to download the data as an Excel file */}
       <button className="btn btn-primary mt-3" onClick={() => downloadFile("grouped_epics_data.xlsx")}>
         Download as Excel
       </button>
 
-      {/* File upload input */}
       <div className="mt-3">
         <input type="file" accept=".xlsx" onChange={(e) => setExcelFile(e.target.files[0])} />
       </div>
 
-      {/* Navigation buttons */}
-      {excelFile && (
-        <button className="btn btn-success mt-3" onClick={nextPage}>
+      <div className="mt-3">
+        <button className="btn btn-secondary" onClick={prevPage}>
+          Previous
+        </button>
+        <button className="btn btn-success" onClick={nextPage}>
           Next
         </button>
-      )}
-      <button className="btn btn-secondary mt-3" onClick={prevPage}>
-        Previous
-      </button>
+      </div>
     </div>
   );
 }
 
 function WordDocumentScreen({ wordFile, setWordFile, nextPage, prevPage }) {
   const wordContent = "This is the project overview and initial notes...";
-
   const handleFileChange = (e) => setWordFile(e.target.files[0]);
 
   return (
@@ -171,8 +157,10 @@ function WordDocumentScreen({ wordFile, setWordFile, nextPage, prevPage }) {
       <textarea defaultValue={wordContent} readOnly rows={10} />
       <button onClick={() => downloadFile("project_overview.docx")}>Download Word Document</button>
       <input type="file" accept=".docx" onChange={handleFileChange} />
-      {wordFile && <button onClick={nextPage}>Next</button>}
-      <button onClick={prevPage}>Previous</button>
+      <div>
+        <button onClick={prevPage}>Previous</button>
+        <button onClick={nextPage}>Next</button>
+      </div>
     </div>
   );
 }
@@ -186,8 +174,10 @@ function PlantUMLScreen({ plantUMLCode, setPlantUMLCode, nextPage, prevPage }) {
       <textarea value={plantUMLCode} onChange={handleCodeChange} rows={10} />
       <button onClick={() => downloadFile("project_uml.txt")}>Download PlantUML Code</button>
       <input type="file" accept=".txt" onChange={(e) => setPlantUMLCode(e.target.files[0])} />
-      {plantUMLCode && <button onClick={nextPage}>Next</button>}
-      <button onClick={prevPage}>Previous</button>
+      <div>
+        <button onClick={prevPage}>Previous</button>
+        <button onClick={nextPage}>Next</button>
+      </div>
     </div>
   );
 }
