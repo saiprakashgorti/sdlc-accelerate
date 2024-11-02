@@ -1,0 +1,29 @@
+.app {
+  display: flex;
+}
+
+.sidebar {
+  width: 200px;
+  padding: 20px;
+  background: #f0f0f0;
+  height: 100vh;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.screen {
+  width: 80%;
+  max-width: 600px;
+}
+
+button {
+  margin: 10px;
+}
+
