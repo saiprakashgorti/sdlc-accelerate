@@ -26,10 +26,10 @@ function App() {
     @enduml
   `);
   const [htmlContent, setHtmlContent] = useState(
-    "<h1>User Stories</h1><p>This is an example HTML content.</p>"
+    "<h1></h1><p>This is an example HTML content.</p>"
   );
   const [additionalHtmlContent, setAdditionalHtmlContent] = useState(
-    "<h1>Technical Design Document</h1><p>This is additional HTML content.</p>"
+    "<h1></h1><p>This is additional HTML content.</p>"
   );
   const [additionalHtmlContent1, setAdditionalHtmlContent1] = useState(
     "<h1>Additional HTML Content</h1><p>This is additional HTML content.</p>"
@@ -238,7 +238,7 @@ function App() {
 }
 
 function ProgressBar({ page }) {
-  const progressPercentage = ((page + 1) / 6) * 100;
+  const progressPercentage = ((page + 1) / 6) * 100 + 4.4;
 
   return (
     <div className="progress-bar-container">
@@ -256,17 +256,17 @@ function Sidebar({ page, setPage, visitedPages }) {
       <h2>Workflow Progress</h2>
       {visitedPages[0] && (
         <p className={page === 0 ? "active" : ""} onClick={() => setPage(0)}>
-          TXT Upload
+          Project Requirements
         </p>
       )}
       {visitedPages[1] && (
         <p className={page === 1 ? "active" : ""} onClick={() => setPage(1)}>
-          Excel File Processing
+          Epics and Features
         </p>
       )}
       {visitedPages[2] && (
         <p className={page === 2 ? "active" : ""} onClick={() => setPage(2)}>
-          PlantUML Diagram
+          Database Design
         </p>
       )}
       {visitedPages[3] && (
@@ -277,11 +277,12 @@ function Sidebar({ page, setPage, visitedPages }) {
       {visitedPages[4] && (
         <p className={page === 4 ? "active" : ""} onClick={() => setPage(4)}>
           Technical Design Document
+      
         </p>
       )}
       {visitedPages[5] && (
         <p className={page === 5 ? "active" : ""} onClick={() => setPage(5)}>
-          Final Report
+          Screen Mockups
         </p>
       )}
     </div>
@@ -292,7 +293,7 @@ function TxtUploadScreen({ txtFile, setTxtFile }) {
   const handleFileChange = (e) => setTxtFile(e.target.files[0]);
   return (
     <div className="screen">
-      <h2>Upload Project Requirements TXT</h2>
+      <h2>Project Requirements</h2>
       <input type="file" accept=".txt" onChange={handleFileChange} />
     </div>
   );
@@ -303,7 +304,7 @@ function HtmlContentScreen({ htmlContent, setHtmlContent }) {
 
   return (
     <div className="screen">
-      <h2>Rendered HTML Content</h2>
+      <h2>User Stories</h2>
       <div
         className="html-content"
         dangerouslySetInnerHTML={{ __html: htmlContent }}
@@ -329,7 +330,7 @@ function AdditionalHtmlScreen({
 
   return (
     <div className="screen">
-      <h2>Technical Design Document</h2>
+      <h2>Technical Design Document & Screen Mockups</h2>
       <div
         className="html-content"
         dangerouslySetInnerHTML={{ __html: additionalHtmlContent }}
@@ -415,7 +416,7 @@ function DataTableScreen({ data: jsonData, excelFile, setExcelFile }) {
 
   return (
     <div className="screen">
-      <h2>Project Data Table</h2>
+      <h2>Epics and Features</h2>
 
       <table className="table table-bordered">
         <thead>
@@ -473,7 +474,7 @@ function PlantUMLScreen({ plantUMLCode, setPlantUMLCode, umlUrl, setUmlUrl }) {
             textAlign: 'center',
             marginTop: '10px',
           }}
-        >Project Architecture - PlantUML Diagram</h2>
+        >Database Design</h2>
         <textarea 
           value={plantUMLCode} 
           onChange={handleCodeChange}
