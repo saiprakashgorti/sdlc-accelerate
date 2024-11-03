@@ -179,7 +179,7 @@ This prototype demonstrates how AI can augment human expertise in software proje
 _Note: This is a hackathon prototype demonstrating the potential for AI-assisted project inception._
 
 
-Steps to run the project**
+Steps to run the project
 ------------------------
 * Clone the project in your local
 * Navigate to project's directory in your terminal
