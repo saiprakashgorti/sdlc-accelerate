@@ -231,11 +231,11 @@ function App() {
         )}
         {page === 6 && (
           <FinalReport
-            txtFile={txtFile}
             excelFile={excelFile}
-            plantUMLCode={plantUMLCode}
+            plantUMLCode={umlUrl}
             htmlContent={htmlContent}
             additionalHtmlContent={additionalHtmlContent}
+            additionalHtmlContent1={additionalHtmlContent1}
           />
         )}
       </div>
@@ -245,7 +245,7 @@ function App() {
           <i className="bi bi-arrow-left-circle"></i>
         </button>
       )}
-      {page < 5 && (
+      {page < 6 && (
         <button className="arrow arrow-right" onClick={nextPage}>
           <i className="bi bi-arrow-right-circle"></i>
         </button>
@@ -300,6 +300,11 @@ function Sidebar({ page, setPage, visitedPages }) {
       {visitedPages[5] && (
         <p className={page === 5 ? "active" : ""} onClick={() => setPage(5)}>
           Screen Mockups
+        </p>
+      )}
+      {visitedPages[6] && (
+        <p className={page === 6 ? "active" : ""} onClick={() => setPage(6)}>
+          Project Summary - Artifacts Generated
         </p>
       )}
     </div>
@@ -686,27 +691,218 @@ function PlantUMLScreen({ plantUMLCode, setPlantUMLCode, umlUrl, setUmlUrl }) {
   );
 }
 
-function FinalReport({
-  txtFile,
-  excelFile,
-  plantUMLCode,
-  htmlContent,
-  additionalHtmlContent,
-}) {
+// function FinalReport({
+//   txtFile,
+//   excelFile,
+//   plantUMLCode,
+//   htmlContent,
+//   additionalHtmlContent,
+// }) {
+//   return (
+//     <div className="screen">
+//       <h2>Final Project Report</h2>
+//       <p>Requirements TXT: {txtFile ? txtFile.name : "Not Uploaded"}</p>
+//       <p>Excel Data Table: {excelFile ? excelFile.name : "Not Uploaded"}</p>
+//       <pre>PlantUML Diagram Code: {plantUMLCode}</pre>
+//       <div
+//         className="html-preview"
+//         dangerouslySetInnerHTML={{ __html: htmlContent }}
+//       />
+//       <div
+//         className="html-preview"
+//         dangerouslySetInnerHTML={{ __html: additionalHtmlContent }}
+//       />
+//     </div>
+//   );
+// }
+
+function FinalReport({ excelFile, umlUrl, htmlContent, additionalHtmlContent, additionalHtmlContent1 }) {
   return (
-    <div className="screen">
-      <h2>Final Project Report</h2>
-      <p>Requirements TXT: {txtFile ? txtFile.name : "Not Uploaded"}</p>
-      <p>Excel Data Table: {excelFile ? excelFile.name : "Not Uploaded"}</p>
-      <pre>PlantUML Diagram Code: {plantUMLCode}</pre>
-      <div
-        className="html-preview"
-        dangerouslySetInnerHTML={{ __html: htmlContent }}
-      />
-      <div
-        className="html-preview"
-        dangerouslySetInnerHTML={{ __html: additionalHtmlContent }}
-      />
+    <div style={{
+      height: 'calc(100vh - 100px)', // Adjust based on your header/footer
+      overflow: 'auto',
+      padding: '24px',
+      background: '#FFFFFF'
+    }}>
+      <h1 style={{
+        fontSize: '28px',
+        fontWeight: '600',
+        color: '#1A1A1A',
+        marginBottom: '32px',
+        textAlign: 'center'
+      }}>
+        Project Summary - Artifacts Generated
+      </h1>
+
+      {/* Epics and Features */}
+      <div style={{
+        marginBottom: '24px',
+        padding: '24px',
+        background: '#FFFFFF',
+        borderRadius: '8px',
+        border: '1px solid #E5E7EB'
+      }}>
+        <h2 style={{
+          fontSize: '20px',
+          fontWeight: '600',
+          color: '#374151',
+          marginBottom: '16px'
+        }}>
+          Epics and Features
+        </h2>
+        <div style={{
+          maxHeight: '300px',
+          overflow: 'auto',
+          padding: '16px',
+          background: '#F9FAFB',
+          borderRadius: '6px'
+        }}>
+          <table style={{
+            width: '100%',
+            borderCollapse: 'collapse'
+          }}>
+            <thead>
+              <tr>
+                <th style={{
+                  textAlign: 'left',
+                  padding: '8px',
+                  borderBottom: '2px solid #E5E7EB'
+                }}>Epic</th>
+                <th style={{
+                  textAlign: 'left',
+                  padding: '8px',
+                  borderBottom: '2px solid #E5E7EB'
+                }}>Features</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Array.isArray(excelFile) && excelFile.map((row, index) => (
+                <tr key={index}>
+                  {row.Epic && <td style={{
+                    padding: '8px',
+                    borderBottom: '1px solid #E5E7EB'
+                  }} rowSpan={row.RowSpan}>{row.Epic}</td>}
+                  <td style={{
+                    padding: '8px',
+                    borderBottom: '1px solid #E5E7EB'
+                  }}>{row.Feature}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Database Design */}
+      <div style={{
+        marginBottom: '24px',
+        padding: '24px',
+        background: '#FFFFFF',
+        borderRadius: '8px',
+        border: '1px solid #E5E7EB'
+      }}>
+        <h2 style={{
+          fontSize: '20px',
+          fontWeight: '600',
+          color: '#374151',
+          marginBottom: '16px'
+        }}>
+          Database Design
+        </h2>
+        <div style={{
+          maxHeight: '400px',
+          overflow: 'auto',
+          padding: '16px',
+          background: '#F9FAFB',
+          borderRadius: '6px'
+        }}>
+          <img 
+            src={umlUrl} 
+            alt="Database Schema" 
+            style={{
+              width: '100%',
+              height: 'auto'
+            }}
+          />
+        </div>
+      </div>
+
+      {/* User Stories */}
+      <div style={{
+        marginBottom: '24px',
+        padding: '24px',
+        background: '#FFFFFF',
+        borderRadius: '8px',
+        border: '1px solid #E5E7EB'
+      }}>
+        <h2 style={{
+          fontSize: '20px',
+          fontWeight: '600',
+          color: '#374151',
+          marginBottom: '16px'
+        }}>
+          User Stories
+        </h2>
+        <div style={{
+          maxHeight: '300px',
+          overflow: 'auto',
+          padding: '16px',
+          background: '#F9FAFB',
+          borderRadius: '6px'
+        }}
+        dangerouslySetInnerHTML={{ __html: additionalHtmlContent }} />
+      </div>
+
+      {/* Technical Design */}
+      <div style={{
+        marginBottom: '24px',
+        padding: '24px',
+        background: '#FFFFFF',
+        borderRadius: '8px',
+        border: '1px solid #E5E7EB'
+      }}>
+        <h2 style={{
+          fontSize: '20px',
+          fontWeight: '600',
+          color: '#374151',
+          marginBottom: '16px'
+        }}>
+          Technical Design Document
+        </h2>
+        <div style={{
+          maxHeight: '300px',
+          overflow: 'auto',
+          padding: '16px',
+          background: '#F9FAFB',
+          borderRadius: '6px'
+        }}
+        dangerouslySetInnerHTML={{ __html: htmlContent }} />
+      </div>
+
+      {/* Screen Mockups */}
+      <div style={{
+        padding: '24px',
+        background: '#FFFFFF',
+        borderRadius: '8px',
+        border: '1px solid #E5E7EB'
+      }}>
+        <h2 style={{
+          fontSize: '20px',
+          fontWeight: '600',
+          color: '#374151',
+          marginBottom: '16px'
+        }}>
+          Screen Mockups
+        </h2>
+        <div style={{
+          maxHeight: '400px',
+          overflow: 'auto',
+          padding: '16px',
+          background: '#F9FAFB',
+          borderRadius: '6px'
+        }}
+        dangerouslySetInnerHTML={{ __html: additionalHtmlContent1 }} />
+      </div>
     </div>
   );
 }
