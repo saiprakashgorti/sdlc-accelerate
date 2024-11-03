@@ -289,12 +289,158 @@ function Sidebar({ page, setPage, visitedPages }) {
   );
 }
 
+// function TxtUploadScreen({ txtFile, setTxtFile }) {
+//   const handleFileChange = (e) => setTxtFile(e.target.files[0]);
+//   return (
+//     <div className="screen">
+//       <h2>Upload Project Requirements TXT</h2>
+//       <input type="file" accept=".txt" onChange={handleFileChange} />
+//     </div>
+//   );
+// }
+
 function TxtUploadScreen({ txtFile, setTxtFile }) {
   const handleFileChange = (e) => setTxtFile(e.target.files[0]);
+  
   return (
-    <div className="screen">
-      <h2>Project Requirements</h2>
-      <input type="file" accept=".txt" onChange={handleFileChange} />
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      width: '100%',
+      padding: '40px 24px',
+      background: '#FFFFFF',
+    }}>
+      {/* Title Section */}
+      <div style={{
+        textAlign: 'center',
+        marginBottom: '32px'
+      }}>
+        <h1 style={{
+          fontSize: '42px',
+          fontWeight: '800',
+          color: '#1A1A1A',
+          marginBottom: '24px',
+          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+        }}>
+          SDLC Accelerate
+        </h1>
+        <p style={{
+          fontSize: '16px',
+          lineHeight: '24px',
+          color: '#4B5563',
+          maxWidth: '600px',
+          margin: '0 auto',
+          padding: '0 20px'
+        }}>
+          Transform your project requirements into comprehensive software architecture diagrams. 
+          Our AI-powered tool analyzes your requirements and generates detailed UML diagrams, 
+          streamlining your software development lifecycle.
+        </p>
+      </div>
+
+      {/* Upload Section */}
+      <div style={{
+        background: txtFile ? '#F0FFF4' : '#F7F9FC',
+        borderRadius: '16px',
+        width: '100%',
+        maxWidth: '480px',
+        border: `1px dashed ${txtFile ? '#31C48D' : '#E4E9F0'}`,
+        transition: 'all 0.2s ease',
+        cursor: 'pointer',
+        marginTop: '32px'
+      }}>
+        <input
+          type="file"
+          accept=".txt"
+          onChange={handleFileChange}
+          style={{ display: 'none' }}
+          id="file-upload"
+        />
+        <label
+          htmlFor="file-upload"
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            padding: '40px 24px',
+            cursor: 'pointer'
+          }}
+        >
+          {txtFile ? (
+            // Uploaded State
+            <>
+              <div style={{
+                background: '#DEF7EC',
+                borderRadius: '12px',
+                padding: '16px',
+                marginBottom: '24px'
+              }}>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17L4 12" stroke="#31C48D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              <h3 style={{
+                fontSize: '16px',
+                fontWeight: '600',
+                color: '#1A1A1A',
+                marginBottom: '8px'
+              }}>
+                File Uploaded Successfully
+              </h3>
+              <p style={{
+                fontSize: '14px',
+                color: '#31C48D',
+                marginBottom: '4px'
+              }}>
+                {txtFile.name}
+              </p>
+              <span style={{
+                fontSize: '12px',
+                color: '#9CA3AF'
+              }}>
+                Click to upload a different file
+              </span>
+            </>
+          ) : (
+            // Default Upload State
+            <>
+              <div style={{
+                background: '#EEF2FF',
+                borderRadius: '12px',
+                padding: '16px',
+                marginBottom: '24px'
+              }}>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 15V3M12 3L7 8M12 3L17 8" stroke="#2D70FD" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M3 15V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V15" stroke="#2D70FD" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+              </div>
+              <h3 style={{
+                fontSize: '16px',
+                fontWeight: '600',
+                color: '#1A1A1A',
+                marginBottom: '8px'
+              }}>
+                Upload Requirements File
+              </h3>
+              <p style={{
+                fontSize: '14px',
+                color: '#6B7280',
+                marginBottom: '4px'
+              }}>
+                Drag and drop your file here or click to browse
+              </p>
+              <span style={{
+                fontSize: '12px',
+                color: '#9CA3AF'
+              }}>
+                Supported format: .txt
+              </span>
+            </>
+          )}
+        </label>
+      </div>
     </div>
   );
 }
