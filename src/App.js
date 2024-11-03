@@ -151,6 +151,8 @@ function App() {
         setHtmlContent(response);
       } else if (page === 3) {
         setAdditionalHtmlContent(response);
+      } else if (page === 4) {
+        setAdditionalHtmlContent1(response);
       }
       setAssistantResponse(response);
     } catch (err) {
