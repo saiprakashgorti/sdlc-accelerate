@@ -26,10 +26,10 @@ function App() {
     @enduml
   `);
   const [htmlContent, setHtmlContent] = useState(
-    "<h1>HTML Content Example</h1><p>This is an example HTML content.</p>"
+    "<h1>User Stories</h1><p>This is an example HTML content.</p>"
   );
   const [additionalHtmlContent, setAdditionalHtmlContent] = useState(
-    "<h1>Additional HTML Content</h1><p>This is additional HTML content.</p>"
+    "<h1>Technical Design Document</h1><p>This is additional HTML content.</p>"
   );
   const [additionalHtmlContent1, setAdditionalHtmlContent1] = useState(
     "<h1>Additional HTML Content</h1><p>This is additional HTML content.</p>"
@@ -271,12 +271,12 @@ function Sidebar({ page, setPage, visitedPages }) {
       )}
       {visitedPages[3] && (
         <p className={page === 3 ? "active" : ""} onClick={() => setPage(3)}>
-          HTML Content
+          User Stories
         </p>
       )}
       {visitedPages[4] && (
         <p className={page === 4 ? "active" : ""} onClick={() => setPage(4)}>
-          Additional HTML Content
+          Technical Design Document
         </p>
       )}
       {visitedPages[5] && (
@@ -308,7 +308,7 @@ function HtmlContentScreen({ htmlContent, setHtmlContent }) {
         className="html-content"
         dangerouslySetInnerHTML={{ __html: htmlContent }}
       />
-      <div className="fixed-buttons">
+      {/* <div className="fixed-buttons">
         <button
           className="fixed-download"
           onClick={() => downloadFile("html_content.html", htmlContent)}
@@ -316,7 +316,7 @@ function HtmlContentScreen({ htmlContent, setHtmlContent }) {
           Download HTML Content
         </button>
         <input type="file" accept=".html" onChange={handleFileChange} />
-      </div>
+      </div> */}
     </div>
   );
 }
@@ -329,12 +329,12 @@ function AdditionalHtmlScreen({
 
   return (
     <div className="screen">
-      <h2>Additional HTML Content</h2>
+      <h2>Technical Design Document</h2>
       <div
         className="html-content"
         dangerouslySetInnerHTML={{ __html: additionalHtmlContent }}
       />
-      <div className="fixed-buttons">
+      {/* <div className="fixed-buttons">
         <button
           className="fixed-download"
           onClick={() =>
@@ -344,7 +344,7 @@ function AdditionalHtmlScreen({
           Download Additional HTML
         </button>
         <input type="file" accept=".html" onChange={handleFileChange} />
-      </div>
+      </div> */}
     </div>
   );
 }
