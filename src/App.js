@@ -350,44 +350,6 @@ function AdditionalHtmlScreen({
 }
 
 function DataTableScreen({ data: jsonData, excelFile, setExcelFile }) {
-  const sampleData = [
-    {
-      epics: [
-        {
-          Epic: "Listing Management",
-          Features: [
-            "Product Catalog Integration: Enable seamless integration of seller's product catalog for easier listing management.",
-            "Multi-format Listing Support: Allow listings in multiple formats including auctions and fixed-price sales for increased selling flexibility.",
-            "Category-based Organization: Implement category-based organization of listings for improved product discoverability.",
-          ],
-        },
-        {
-          Epic: "Inventory Management",
-          Features: [
-            "Real-time Inventory Sync: Maintain real-time inventory levels across all sales channels to prevent overselling.",
-            "Minimum Threshold Alerts: Enable automated alerts for low stock levels to ensure timely replenishment.",
-            "Automated Restock Triggers: Implement automated triggers for restocking items based on inventory levels and sales velocity.",
-          ],
-        },
-        {
-          Epic: "Pricing System",
-          Features: [
-            "Dynamic Pricing Algorithms: Implement dynamic pricing algorithms to optimize listing prices based on market conditions and demand.",
-            "Auction Management: Enable management of auction-style listings with automated bidding and closing processes.",
-            "Bulk Pricing Updates: Allow sellers to update prices in bulk for efficient listing management.",
-          ],
-        },
-        {
-          Epic: "Buyer Experience",
-          Features: [
-            "Advanced Search Functionality: Implement advanced search capabilities to help buyers find desired products easily.",
-            "Secure Checkout Process: Ensure a secure checkout process with multiple payment methods for improved conversion rates.",
-            "Order Tracking: Provide buyers with real-time tracking of their orders to enhance post-purchase experience.",
-          ],
-        },
-      ],
-    },
-  ];
 
   const [flattenedDataForTable, setFlattenedDataForTable] = useState([]);
   const [flattenedDataForExcel, setFlattenedDataForExcel] = useState([]);
