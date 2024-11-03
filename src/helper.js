@@ -43,7 +43,6 @@ export const readTextFile = (file) => {
 };
 
 export const generateUmlUrl = (umlCode, setUmlUrl) => {
-  debugger;
   const encoded = plantumlEncoder.encode(umlCode);
   console.log(encoded);
   const url = `https://www.plantuml.com/plantuml/svg/${encoded}`;

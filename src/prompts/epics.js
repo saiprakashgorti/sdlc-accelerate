@@ -1,4 +1,4 @@
-const epics = `You are a user story expert. Convert the provided epics and features into detailed, Jira-ready user stories. Generate multiple user stories per feature when needed, following this exact structure:
+const EPICS_PROMPT = `You are a user story expert. Convert the provided epics and features into detailed, Jira-ready user stories. Generate multiple user stories per feature when needed, following this exact structure:
 
 For each user story:
 
@@ -87,90 +87,111 @@ Quality Checklist:
 
 Generate atleast 2 user stories for 2 main features that will provide a good screen mockups in the next stages. 
 
-There should be no leading and trailing words, start directly with title.
+There should be no leading and trailing words.
+The output should be html with proper css to make it look like user stories. <html></html>
 Sample Output
-Title: Enable Location-Based Restaurant Discovery
-As a hungry customer,
-I want to find nearby restaurants based on my current location,
-So that I can quickly discover food options available for delivery to my address.
-Description:
-Customers need an intuitive way to discover restaurants in their vicinity with accurate delivery radius information. This feature will use geolocation services to show relevant restaurants and provide estimated delivery times based on distance.
-Acceptance Criteria:
-GIVEN the user opens the app
-WHEN location permission is granted
-THEN display a list of restaurants within 5km radius sorted by distance
-GIVEN the restaurant list is displayed
-WHEN user scrolls through results
-THEN load additional restaurants with infinite scroll (20 restaurants per page)
-GIVEN the user's location
-WHEN displaying each restaurant
-THEN show estimated delivery time and distance
-Definition of Done:
-Code reviewed and approved
-Unit tests written and passing
-Integration tests passing
-Documentation updated
-UX review completed
-Performance testing completed
-Location accuracy verified
-Story Points: 8
-Priority: Highest
-Epic Link: Restaurant Discovery & Ordering
-Dependencies:
-Location services integration
-Restaurant database setup
-Google Maps API integration
-Technical Notes:
-Implement geohashing for efficient location queries
-Cache restaurant data for frequently searched areas
-Handle location permission edge cases
-Consider battery optimization for location updates
-Business Rules:
-Maximum delivery radius: 8km
-Refresh restaurant list every 5 minutes
-Show only currently open restaurants
-Display surge pricing during peak hours
-Title: Implement Real-Time Order Tracking
-As a customer who placed an order,
-I want to track my order status and delivery partner location in real-time,
-So that I know exactly when my food will arrive.
-Description:
-Customers need transparent and accurate order tracking from restaurant acceptance through delivery. This feature will provide live updates and push notifications for each order stage.
-Acceptance Criteria:
-GIVEN an order is confirmed
-WHEN viewing the order status
-THEN display current stage (Confirmed, Preparing, Ready for Pickup, In Transit, Delivered)
-GIVEN the order is assigned to a delivery partner
-WHEN viewing the tracking screen
-THEN show real-time location updates every 30 seconds
-GIVEN an order status changes
-WHEN the change occurs
-THEN send push notification to customer with updated status
-Definition of Done:
-Code reviewed and approved
-Unit tests written and passing
-Integration tests passing
-Documentation updated
-UX review completed
-Performance testing completed
-Push notification delivery verified
-Story Points: 13
-Priority: High
-Epic Link: Delivery Management
-Dependencies:
-Push notification system
-Real-time location tracking service
-Order management system
-Technical Notes:
-Use WebSocket for real-time updates
-Implement background location tracking
-Handle network disconnections gracefully
-Optimize battery usage for location updates
-Business Rules:
-Location update frequency: 30 seconds
-Maximum delivery delay notification: 15 minutes
-Automatic order completion after delivery
-Keep tracking history for 24 hours
+<style>
+    .user-story {
+        background-color: #f5f5f5;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 20px;
+        margin-bottom: 20px;
+        font-family: Arial, sans-serif;
+    }
+
+    .title {
+        color: #0052cc;
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    .persona {
+        background-color: #e3f2fd;
+        padding: 10px;
+        border-radius: 3px;
+        margin-bottom: 15px;
+    }
+
+    .description {
+        margin: 15px 0;
+        line-height: 1.5;
+    }
+
+    .section-header {
+        color: #172b4d;
+        font-weight: bold;
+        margin: 15px 0 10px 0;
+    }
+
+    .acceptance-criteria {
+        background-color: #fff;
+        padding: 10px;
+        border-left: 3px solid #36b37e;
+    }
+
+    .metadata {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .metadata-item {
+        background-color: #fff;
+        padding: 5px 10px;
+        border-radius: 3px;
+    }
+</style>
+<div class="user-story">
+    <div class="title">Implement Smart Restaurant Search System</div>
+    text
+    <div class="persona">
+        As a hungry customer,<br> I want to search for restaurants based on my location and preferences,<br> So that I can quickly find relevant dining options that match my needs.
+    </div>
+
+    <div class="description">
+        The smart search system will help users discover restaurants efficiently by combining location data, user preferences, and real-time availability. This feature is crucial for improving user engagement and reducing time-to-order metrics.
+    </div>
+
+    <div class="section-header">Acceptance Criteria:</div>
+    <div class="acceptance-criteria">
+        1. GIVEN the user is on the home screen<br> WHEN they enable location services<br> THEN nearby restaurants within 5km radius are displayed<br><br> 2. GIVEN the user has entered search criteria<br> WHEN they apply filters for cuisine and price
+        range<br> THEN results update in real-time within 1 second<br><br> 3. GIVEN the search results are displayed<br> WHEN user sorts by rating, distance, or delivery time<br> THEN results reorder instantly maintaining filter criteria
+    </div>
+
+    <div class="metadata">
+        <div class="metadata-item">Story Points: 8</div>
+        <div class="metadata-item">Priority: High</div>
+        <div class="metadata-item">Epic Link: Restaurant Discovery & Ordering</div>
+    </div>
+
+</div>
+<div class="user-story">
+    <div class="title">Enable Real-time Order Tracking</div>
+    text
+    <div class="persona">
+        As an active customer,<br> I want to track my order's status and delivery partner's location in real-time,<br> So that I can know exactly when my food will arrive.
+    </div>
+
+    <div class="description">
+        Real-time tracking provides transparency and reduces customer anxiety about order status. This feature will significantly improve customer satisfaction and reduce support inquiries about order status.
+    </div>
+
+    <div class="section-header">Acceptance Criteria:</div>
+    <div class="acceptance-criteria">
+        1. GIVEN a customer has placed an order<br> WHEN they view the order status<br> THEN they see live updates for order preparation, pickup, and delivery<br><br> 2. GIVEN the order is out for delivery<br> WHEN customer opens tracking view<br> THEN
+        they see delivery partner's location updating every 30 seconds<br><br> 3. GIVEN the delivery is in progress<br> WHEN delivery partner's location changes<br> THEN ETA updates automatically based on current traffic conditions
+    </div>
+
+    <div class="metadata">
+        <div class="metadata-item">Story Points: 13</div>
+        <div class="metadata-item">Priority: Highest</div>
+        <div class="metadata-item">Epic Link: Delivery Management</div>
+    </div>
+
+</div>
 `;
 
-export default epics;
+export default EPICS_PROMPT;

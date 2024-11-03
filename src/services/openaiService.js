@@ -1,8 +1,10 @@
 // src/services/openaiService.js
-
 import axios from "axios";
 import RFD_PROMPT from "../prompts/rfp_analyzer";
 import DATA_PROMPT from "../prompts/data_analyzer";
+import EPICS_PROMPT from "../prompts/epics";
+import SCREEN_MOCKUP_PROMPT from "../prompts/screen_mockup";
+import TECHNICAL_DESIGN_PROMPT from "../prompts/technical_design";
 
 export const getOpenAIResponse = async (userInput, prompt) => {
   const openAIApiKey = import.meta.env.VITE_OPENAI_API_KEY;
@@ -21,6 +23,15 @@ export const getOpenAIResponse = async (userInput, prompt) => {
       break;
     case "data_analyzer":
       systemPrompt = DATA_PROMPT;
+      break;
+    case "epics":
+      systemPrompt = EPICS_PROMPT;
+      break;
+    case "screen_mockup":
+      systemPrompt = SCREEN_MOCKUP_PROMPT;
+      break;
+    case "technical_design":
+      systemPrompt = TECHNICAL_DESIGN_PROMPT;
       break;
     default:
       systemPrompt = "";

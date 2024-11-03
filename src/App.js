@@ -31,13 +31,15 @@ function App() {
   const [additionalHtmlContent, setAdditionalHtmlContent] = useState(
     "<h1>Additional HTML Content</h1><p>This is additional HTML content.</p>"
   );
+  const [additionalHtmlContent1, setAdditionalHtmlContent1] = useState(
+    "<h1>Additional HTML Content</h1><p>This is additional HTML content.</p>"
+  );
   const [assistantResponse, setAssistantResponse] = useState("");
   const [umlUrl, setUmlUrl] = useState("");
   // const [fileType, setFileType] = useState("");
   const [rfd, setRfd] = useState("");
 
   const nextPage = async (e) => {
-    debugger;
     e.preventDefault();
     setAssistantResponse("");
     try {
@@ -49,91 +51,106 @@ function App() {
       } else if (page === 1 && excelFile) {
         fileContent = await readExcelFile(excelFile);
         prompt = "data_analyzer";
+      } else if (page === 2) {
+        fileContent = rfd + plantUMLCode;
+        prompt = "epics";
+      } else if (page === 3) {
+        fileContent = htmlContent;
+        prompt = "technical_design";
+      } else if (page === 4) {
+        fileContent = additionalHtmlContent;
+        prompt = "screen_mockup";
       }
-      // const response = await getOpenAIResponse(fileContent, prompt);
-      let response = "";
+      debugger;
+
+      const response = await getOpenAIResponse(fileContent, prompt);
+      // let response = "";
       if (page === 0) {
-        response = `{ "epics": [ { "Epic": "Listing Management", "Features": [ "Product Catalog Integration: Enable seamless integration of seller's product catalog for easier listing management.", "Multi-format Listing Support: Allow listings in multiple formats including auctions and fixed-price sales for increased selling flexibility.", "Category-based Organization: Implement category-based organization of listings for improved product discoverability." ] }, { "Epic": "Inventory Management", "Features": [ "Real-time Inventory Sync: Maintain real-time inventory levels across all sales channels to prevent overselling.", "Minimum Threshold Alerts: Enable automated alerts for low stock levels to ensure timely replenishment.", "Automated Restock Triggers: Implement automated triggers for restocking items based on inventory levels and sales velocity." ] }, { "Epic": "Pricing System", "Features": [ "Dynamic Pricing Algorithms: Implement dynamic pricing algorithms to optimize listing prices based on market conditions and demand.", "Auction Management: Enable management of auction-style listings with automated bidding and closing processes.", "Bulk Pricing Updates: Allow sellers to update prices in bulk for efficient listing management." ] }, { "Epic": "Buyer Experience", "Features": [ "Advanced Search Functionality: Implement advanced search capabilities to help buyers find desired products easily.", "Secure Checkout Process: Ensure a secure checkout process with multiple payment methods for improved conversion rates.", "Order Tracking: Provide buyers with real-time tracking of their orders to enhance post-purchase experience." ] }, { "Epic": "Security", "Features": [ "Multi-factor Authentication: Implement multi-factor authentication for user accounts to enhance security.", "Encrypted Communications: Ensure all communications are encrypted to protect sensitive user data.", "Fraud Detection: Implement automated fraud detection mechanisms to protect users and maintain platform integrity." ] }, { "Epic": "Integration", "Features": [ "Third-Party System Integration: Enable integration with key third-party systems such as payment gateways, shipping carriers, and inventory management.", "RESTful API Architecture: Implement a RESTful API architecture to facilitate seamless integration and data exchange with external systems." ] }, { "Epic": "Compliance", "Features": [ "GDPR Compliance: Ensure platform complies with GDPR for data privacy and protection.", "PCI DSS Standards: Adhere to PCI DSS standards for secure payment processing and cardholder data protection." ] }, { "Epic": "Performance", "Features": [ "High Availability: Maintain 99.99% platform uptime for consistent user experience.", "Fast Load Time: Ensure page load time is under 2 seconds for improved user experience and SEO." ] } ] }`;
+        // response = `{ "epics": [ { "Epic": "Listing Management", "Features": [ "Product Catalog Integration: Enable seamless integration of seller's product catalog for easier listing management.", "Multi-format Listing Support: Allow listings in multiple formats including auctions and fixed-price sales for increased selling flexibility.", "Category-based Organization: Implement category-based organization of listings for improved product discoverability." ] }, { "Epic": "Inventory Management", "Features": [ "Real-time Inventory Sync: Maintain real-time inventory levels across all sales channels to prevent overselling.", "Minimum Threshold Alerts: Enable automated alerts for low stock levels to ensure timely replenishment.", "Automated Restock Triggers: Implement automated triggers for restocking items based on inventory levels and sales velocity." ] }, { "Epic": "Pricing System", "Features": [ "Dynamic Pricing Algorithms: Implement dynamic pricing algorithms to optimize listing prices based on market conditions and demand.", "Auction Management: Enable management of auction-style listings with automated bidding and closing processes.", "Bulk Pricing Updates: Allow sellers to update prices in bulk for efficient listing management." ] }, { "Epic": "Buyer Experience", "Features": [ "Advanced Search Functionality: Implement advanced search capabilities to help buyers find desired products easily.", "Secure Checkout Process: Ensure a secure checkout process with multiple payment methods for improved conversion rates.", "Order Tracking: Provide buyers with real-time tracking of their orders to enhance post-purchase experience." ] }, { "Epic": "Security", "Features": [ "Multi-factor Authentication: Implement multi-factor authentication for user accounts to enhance security.", "Encrypted Communications: Ensure all communications are encrypted to protect sensitive user data.", "Fraud Detection: Implement automated fraud detection mechanisms to protect users and maintain platform integrity." ] }, { "Epic": "Integration", "Features": [ "Third-Party System Integration: Enable integration with key third-party systems such as payment gateways, shipping carriers, and inventory management.", "RESTful API Architecture: Implement a RESTful API architecture to facilitate seamless integration and data exchange with external systems." ] }, { "Epic": "Compliance", "Features": [ "GDPR Compliance: Ensure platform complies with GDPR for data privacy and protection.", "PCI DSS Standards: Adhere to PCI DSS standards for secure payment processing and cardholder data protection." ] }, { "Epic": "Performance", "Features": [ "High Availability: Maintain 99.99% platform uptime for consistent user experience.", "Fast Load Time: Ensure page load time is under 2 seconds for improved user experience and SEO." ] } ] }`;
         setRfd(response);
       } else if (page === 1) {
-        response = `@startuml
-skinparam class {
-BackgroundColor White
-ArrowColor Black
-BorderColor Black
-}
-entity "Customer" as CUST {
-* customer_id
---
-phone_number
-email
-status
-}
-entity "Restaurant" as REST {
-* restaurant_id
---
-name
-location
-cuisine_type
-rating
-status
-}
-entity "Order" as ORD {
-* order_id
---
-order_date
-delivery_time
-status
-total_amount
-}
-entity "DeliveryPartner" as DEL {
-* partner_id
---
-status
-current_location
-rating
-}
-entity "MenuItem" as MENU {
-* item_id
---
-name
-price
-availability
-category
-}
-entity "Address" as ADDR {
-* address_id
---
-location
-type
-}
-entity "Payment" as PAY {
-* payment_id
---
-amount
-status
-payment_date
-}
-entity "Analytics" as ANAL {
-* report_id
---
-report_date
-metrics
-}
-' Relationships
-CUST ||--o{ ORD
-CUST ||--o{ ADDR
-REST ||--o{ MENU
-REST ||--o{ ORD
-ORD ||--|| DEL
-ORD ||--|| PAY
-REST ||--o{ ANAL
-CUST ||--o{ ANAL
-DEL ||--o{ ANAL
-@enduml
-`;
+        //         response = `@startuml
+        // skinparam class {
+        // BackgroundColor White
+        // ArrowColor Black
+        // BorderColor Black
+        // }
+        // entity "Customer" as CUST {
+        // * customer_id
+        // --
+        // phone_number
+        // email
+        // status
+        // }
+        // entity "Restaurant" as REST {
+        // * restaurant_id
+        // --
+        // name
+        // location
+        // cuisine_type
+        // rating
+        // status
+        // }
+        // entity "Order" as ORD {
+        // * order_id
+        // --
+        // order_date
+        // delivery_time
+        // status
+        // total_amount
+        // }
+        // entity "DeliveryPartner" as DEL {
+        // * partner_id
+        // --
+        // status
+        // current_location
+        // rating
+        // }
+        // entity "MenuItem" as MENU {
+        // * item_id
+        // --
+        // name
+        // price
+        // availability
+        // category
+        // }
+        // entity "Address" as ADDR {
+        // * address_id
+        // --
+        // location
+        // type
+        // }
+        // entity "Payment" as PAY {
+        // * payment_id
+        // --
+        // amount
+        // status
+        // payment_date
+        // }
+        // entity "Analytics" as ANAL {
+        // * report_id
+        // --
+        // report_date
+        // metrics
+        // }
+        // ' Relationships
+        // CUST ||--o{ ORD
+        // CUST ||--o{ ADDR
+        // REST ||--o{ MENU
+        // REST ||--o{ ORD
+        // ORD ||--|| DEL
+        // ORD ||--|| PAY
+        // REST ||--o{ ANAL
+        // CUST ||--o{ ANAL
+        // DEL ||--o{ ANAL
+        // @enduml
+        // `;
         setPlantUMLCode(response);
         generateUmlUrl(response, setUmlUrl);
+      } else if (page === 2) {
+        setHtmlContent(response);
+      } else if (page === 3) {
+        setAdditionalHtmlContent(response);
       }
       setAssistantResponse(response);
     } catch (err) {
@@ -188,6 +205,12 @@ DEL ||--o{ ANAL
           />
         )}
         {page === 5 && (
+          <AdditionalHtmlScreen
+            additionalHtmlContent={additionalHtmlContent1}
+            setAdditionalHtmlContent={setAdditionalHtmlContent1}
+          />
+        )}
+        {page === 6 && (
           <FinalReport
             txtFile={txtFile}
             excelFile={excelFile}
