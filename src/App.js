@@ -5,6 +5,7 @@ import { readExcelFile, readTextFile, generateUmlUrl } from "./helper";
 import * as XLSX from "xlsx";
 import * as FileSaver from "file-saver";
 import "bootstrap-icons/font/bootstrap-icons.css"; // Import Bootstrap Icons
+import Loader from "./Loader";
 
 function App() {
   const [page, setPage] = useState(0);
@@ -16,6 +17,8 @@ function App() {
     false,
     false,
   ]);
+
+  const [isLoading, setIsLoading] = useState(false); // Loader state
   const [txtFile, setTxtFile] = useState(null);
   const [excelFile, setExcelFile] = useState(null);
   const [plantUMLCode, setPlantUMLCode] = useState(`
@@ -42,9 +45,20 @@ function App() {
   const nextPage = async (e) => {
     e.preventDefault();
     setAssistantResponse("");
+    setIsLoading(true);
     try {
       let fileContent;
       let prompt;
+
+    // -------------------------------------------------------------------------------------------
+    // TIMEOUT TO TEST LOADER!!!
+    //   await new Promise((resolve) => setTimeout(resolve, 3000));
+
+    // // Instead of the real response, you can set a mock response here
+    // const mockResponse = "This is a simulated response for testing purposes.";
+    // setAssistantResponse(mockResponse);
+    // -------------------------------------------------------------------------------------------
+
       if (page === 0 && txtFile) {
         fileContent = await readTextFile(txtFile);
         prompt = "rfp_analyzer";
@@ -157,6 +171,8 @@ function App() {
       setAssistantResponse(response);
     } catch (err) {
       console.log("Error processing the file. Please try again." + err);
+    } finally {
+      setIsLoading(false);
     }
     setPage((prevPage) => {
       const nextPage = prevPage + 1;
@@ -173,6 +189,7 @@ function App() {
 
   return (
     <div className="app">
+      {isLoading && <Loader />} {/* Display Loader when isLoading is true */}
       <ProgressBar page={page} />
       <Sidebar page={page} setPage={setPage} visitedPages={visitedPages} />
       <div className="content">
