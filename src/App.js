@@ -468,25 +468,68 @@ function PlantUMLScreen({ plantUMLCode, setPlantUMLCode, umlUrl, setUmlUrl }) {
   };
 
   return (
-    <div className="screen">
-      <h2>Project Architecture - PlantUML Diagram</h2>
-      <textarea value={plantUMLCode} onChange={handleCodeChange} rows={10} />
-      <div className="fixed-buttons">
-        <button
-          className="fixed-download"
-          onClick={() => downloadFile("project_uml.txt", plantUMLCode)}
-        >
-          Download PlantUML Code
-        </button>
-        <input
-          type="file"
-          accept=".txt"
-          onChange={(e) => setPlantUMLCode(e.target.files[0])}
+    <div style={{
+      display: 'flex',
+      width: '100%',
+      height: '100%',
+      minHeight: '600px'  // Add a minimum height or adjust as needed
+    }}>
+      <div style={{
+        width: '50%',
+        padding: '20px',
+        borderRight: '1px solid #ccc',
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
+        <h2
+          style={{
+            textAlign: 'center',
+            marginTop: '10px',
+          }}
+        >Project Architecture - PlantUML Diagram</h2>
+        <textarea 
+          value={plantUMLCode} 
+          onChange={handleCodeChange}
+          style={{
+            width: '90%',
+            flex: 1,
+            resize: 'none',
+            padding: '10px',
+            fontFamily: 'monospace',
+            border: '1px solid #ccc',
+            marginTop: '10px',
+            marginLeft: '35px'
+          }} 
         />
       </div>
-      <div>
-        <h2>Generated UML Diagram</h2>
-        <img src={umlUrl} alt="PlantUML Diagram" />
+      
+      <div style={{
+        width: '50%',
+        padding: '20px',
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
+       <h2
+          style={{
+            textAlign: 'center',
+            marginTop: '10px',
+          }}
+        >
+          Generated UML Diagram</h2>
+        <div style={{
+          flex: 1,
+          overflow: 'auto',
+          marginTop: '10px'
+        }}>
+          <img 
+            src={umlUrl} 
+            alt="PlantUML Diagram" 
+            style={{
+              width: '100%',
+              height: 'auto'
+            }} 
+          />
+        </div>
       </div>
     </div>
   );
