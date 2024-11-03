@@ -53,7 +53,7 @@ function App() {
 }
 
 function ProgressBar({ page }) {
-  const progressPercentage = ((page + 1) / 6) * 100;
+  const progressPercentage = ((page + 1) / 6) * 100 + 4.4;
 
   return (
     <div className="progress-bar-container">
@@ -75,13 +75,22 @@ function Sidebar({ page, setPage, visitedPages }) {
     </div>
   );
 }
-
 function TxtUploadScreen({ txtFile, setTxtFile }) {
   const handleFileChange = (e) => setTxtFile(e.target.files[0]);
   return (
-    <div className="screen">
+    <div className="screen upload-txt-screen">
       <h2>Upload Project Requirements TXT</h2>
-      <input type="file" accept=".txt" onChange={handleFileChange} />
+      <label htmlFor="file-upload" className="btn btn-primary btn-lg">
+        Choose File
+      </label>
+      <input
+        id="file-upload"
+        type="file"
+        accept=".txt"
+        onChange={handleFileChange}
+        style={{ display: "none" }} /* Hides the original input */
+      />
+      {txtFile && <p className="mt-3">Selected file: {txtFile.name}</p>}
     </div>
   );
 }

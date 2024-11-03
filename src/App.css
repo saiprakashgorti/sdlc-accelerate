@@ -225,3 +225,72 @@ button.fixed-download:hover {
 }
 
 
+
+
+
+/* MY NEW ADDED CONTENT!!!! */
+/* Styling specifically for the Upload TXT landing screen */
+.upload-txt-screen {
+  width: 90%; /* Increase width for a spacious look */
+  max-width: 900px; /* Constrain width for readability */
+  height: 82%; /* Increase height to take up majority of the screen */
+  padding: 60px; /* Extra padding for a landing page feel */
+  /* background: url('bg.jpg') no-repeat center center; /* Background image */
+  /* background-size: cover; Ensure the image covers the entire area */
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15); /* Larger shadow for depth */
+  margin: 10px 100px 10px 10px; /* Center with more top margin and slight left alignment, added bottom margin */
+}
+
+/* Styling for the heading */
+.upload-txt-screen h2 {
+  font-size: 32px; /* Larger font for landing page prominence */
+  font-weight: 700; /* Bold for emphasis */
+  color: #1a202c; /* Darker color for contrast */
+  margin-bottom: 25px; /* Space below heading */
+}
+
+/* Styling for the file input button */
+.upload-txt-screen input[type="file"] {
+  display: inline-block;
+  padding: 15px 30px; /* Larger padding for clickability */
+  font-size: 18px; /* Larger font size for focus */
+  font-weight: 500; /* Medium weight for clarity */
+  color: #ffffff;
+  background-color: #3b82f6; /* Button color with modern blue */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Shadow for button depth */
+}
+
+.upload-txt-screen input[type="file"]:hover {
+  background-color: #2563eb; /* Darker blue on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+/* Styling for call-to-action text beneath the button */
+.upload-txt-screen p {
+  font-size: 16px;
+  color: #6b7280; /* Soft gray for secondary text */
+  margin-top: 20px;
+  line-height: 1.6;
+}
+
+/* Add some animation to make the landing page feel lively */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.upload-txt-screen {
+  animation: fadeInUp 0.6s ease-out; /* Fade-in animation */
+}
